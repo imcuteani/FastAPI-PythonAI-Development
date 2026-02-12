@@ -1,0 +1,27 @@
+http://127.0.0.1:8000/items/
+
+interpreting this URL in FastAPI as Query Parameter 
+
+http://127.0.0.1:8000/items/?skip=06&limit=10
+
+Query Parameter models 
+
+Scenario - Building with Query parameters in FastAPI using a Pydantic model for optimized 
+data organization, validation, documentation & especially when there're many related 
+parameters. 
+
+Query parameter models are declared by the Pydantic model as a dependency in the path operation
+function. 
+
+Using a Pydantic model to build the Query Parameter in FastAPI 
+
+1. Define a Pydantic model - Create a class which can inherit from pydantic.BaseModel and 
+define the fields which we can declare in the query parameters, also it should include the 
+their data types and default values. 
+
+2. Use Query() and Field() for Validation/ Metadata identification: We can use 
+fastapi.Query() within the pydantic.Field() to add specific data validation constraints (like 
+min_length, greater than, le, pattern) 
+
+3. Injection of the model into the endpoint function: @app.get("/<your objects/"), declare a parameterwith the 
+the type of the pydantic model and set its default value to Depends() or Query(). 

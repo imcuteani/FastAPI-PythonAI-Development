@@ -1,0 +1,21 @@
+Pydantics 
+
+1. Type hints - An annotation that specifies type of variable , a class attribute or a function parameter or return value. 
+
+- Type hints are optional and not enforced by python but they are useful to static type checkers. The Static type checkers are external tools which reads the python code
+and analyses it, validates against the error or incorrect data types, 
+
+Type hints are from global variables, class attributes and functions but not local variables. They can be accessed using typing.get_type_hints()
+
+2. JSON Schema - json schema is the vocabulary which enables the JSON data consistency , validity and interoperability at scale. 
+
+3. Dataclasses, TypedDicts, TypeAdapter, validate_call -> 
+
+a) Pydantic dataclasses - a wrapper around the standard data classes with additional validaton performed. 
+
+b) Type Adapter - a general way for expressing the any type of FastAPI serialization and validation. This allows types like TypedDict and NamedTuple which can 
+also be validated against the simple data types like integer or timedelta(datetime) 
+
+c) BaseModel - Pydantic's own library, this owns by Pydantic and as a superclass. it helps to perform many common utilies via instance methods. 
+
+d) validate_call -> a decorator which performs the validation while calling a function. 

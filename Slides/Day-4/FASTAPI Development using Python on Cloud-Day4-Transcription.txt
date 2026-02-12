@@ -1,0 +1,111 @@
+Headers parameters in FastAPI
+
+1. In FastAPI, headers can be defined and used for both incoming requests and 
+outgoing responses. We retrieve request headers using the Header function and can set response 
+headers using the Response object or specific JSONResponse classes. 
+
+Retrieving Request Headers 
+
+We can declare header parameters in the Path operation function using the Header function 
+from fastapi. FastAPI automatically can convert standard hyphen-seperated HTTP header names 
+(user-agent) to the respective python style underscore seperated variables names (like user-agent). 
+
+HTTP headers are metadata fields which accompany HTTP requests and responses providing  
+additional context about the connectivity between the client and servers. 
+
+HTTP header contain the Key Vault pairs which can define the content types, authentication 
+credentials, caching behaviour, security policies. 
+
+
+Header-Name: header-value
+
+HTTP Header Example request: 
+
+GET /api/users/123 HTTP/1.1 
+Host api.contoso.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) 
+Accept: application/json
+Auth: Bearer <guid value>
+Content-type: application/json
+
+Example HTTP header Response 
+
+HTTP/1.1 200 OK
+Content-type: application/json
+Content-length: 348
+Cache-Control: max-age=3600
+Set-Cookie: sessionId=xyz123; HttpOnly; Secure
+
+Request & Response flow 
+
+1. Client prepares the request 
+
+2. Headers travel with the request 
+
+3. Server processes the headers 
+
+4. Server generates response 
+
+5. Client receives and processes response 
+
+Types of HTTP headers
+
+1. Request headers - Sent from client to the server, containing information about the 
+request, the client capabilities and what the client expects in return. 
+
+2. Response headers - Sent from the server to the client, providing metadata about the 
+response and it wraps up the information on how client should handle the returned data. 
+
+3. Representation headers - Describe the encoding, format and other HTTP response message body
+charaterstics in both requests and responses. 
+
+Accept-Encoding
+
+Accept-Encoding: gzip, deflate, 
+
+4. Payload headers - contain the information about the payload data including the content length, 
+encoding and range information for partial content delivery. 
+
+Referer: https://www.contoso.com/index.htm
+
+
+Best Practices for using HTTP header
+
+
+Forms Model in FastAPI 
+
+Key Scenario and Real time bast Practices 
+
+1. Data Validation - pydantic's built-in validation works seamlessly with form models, 
+automated data validation in case of invalid data (e.g. missing fields, incorrect data types 
+passed in the form field). 
+
+2. Automatic Docs - The interactive API documentation(/docs) in FastAPI can correctly reflect 
+that endpoint expects the form data allowing us to test it directly in the UI. 
+
+3. Forbid Extra fields - As of FastAPI v0.114.0, we can prevent clients from sending extra 
+fields not defined in the model by adding model_config = {"extra": "forbid"} to the pydantic
+model. 
+
+4. Mixing fields - We can't mix up Form() parameters with a single raw JSON body parameters 
+in the same path operation, as the request body can only be encoded in one format. 
+
+
+JWT Token Structure 
+
+1. header 
+2. payload (containing the user claims like userId and password expiration time) 
+3. signature (encryption) 
+
+This JWT token signature ensures the token's intgrity and authenticity using a secret key. 
+
+JWT tokens are stateless tokens means the server doesn't need to store the session data. 
+
+FastAPI uses the OAuth2PasswordBearer class to automatically extract the token from the 
+HTTP authorization header for incoming request. 
+
+A dependency function then decodes and validates the tokens before allowing access to the 
+respective protected endpoints 
+
+
+ 

@@ -1,0 +1,35 @@
+OpenAPI 
+
+FastAPI generates a schema using OpenAPI standard for defining the APIS. 
+
+"Schema" 
+
+A "schema" is a definition of variables, object, class, method. But it
+is an abstract description. 
+
+API Schema
+OpenAI is a specification which dictates how to define a schema of your API. 
+
+Data Schema 
+
+HTTP Post
+
+@app.post()-> decorator defines an endpoint which listens for POST request 
+at a specific path. 
+
+Request body -> the data which you send through POST request in the body, unlike GET
+requests where parameters are in the URL. (query parameters) 
+
+Pydantic models -> FastAPI leverages Pydantic model as a function parameter. 
+FastAPI automatically validates the incoming data and provides the clear errors if the data
+is invalid. It's the data serialization and validation framework for FastAPI. 
+
+Automatic documentation -> FastAPI generates the OpenAPI documentation includes the body schema, 
+making it easier to test the API with the tools like PostMan and built-in Swagger UI. 
+
+
+204 -> No content is fitting status code if the DELETE request is successful but there's no 
+response body to return (no data existing to be returned in the path parameter). 
+
+200 -> OK as you choose to return the message or the deleted items data in the response body. 
+

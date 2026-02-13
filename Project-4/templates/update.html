@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Update Progress</title></head>
+<body>
+    <h2>Update Progress</h2>
+    {% if message %}
+      <p><strong>{{ message }}</strong></p>
+    {% endif %}
+    <form method="post" action="/update">
+        Name: <input type="text" name="name" required /><br><br>
+        Week:
+        <select name="week" required>
+            {% for w in range(1,10) %}
+            <option value="{{ w }}">Week {{ w }}</option>
+            {% endfor %}
+        </select><br><br>
+        Status:
+        <select name="status" required>
+            <option value="Completed">Completed</option>
+            <option value="Issues">Issues</option>
+            <option value="started">Started</option>
+        </select><br><br>
+        <button type="submit">Update</button>
+    </form>
+    <button onclick="window.location.href='/'">Home</button>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Check Progress</title></head>
+<body>
+    <h2>Check Student Progress</h2>
+    <form method="post" action="/progress">
+        Name: <input type="text" name="name" required />
+        <button type="submit">Check</button>
+    </form>
+    {% if progress %}
+      <h3>Progress for {{ name }}</h3>
+      <table border="1">
+        <tr><th>Name</th><th>Week</th><th>Status</th></tr>
+        {% for item in progress %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>Week {{ item.week | replace ("week", "") }}</td>
+          <td>{{ item.status }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% elif name %}
+      <p>No progress found for {{ name }}</p>
+    {% endif %}
+    <button onclick="window.location.href='/'">Home</button>
+</body>
+</html>

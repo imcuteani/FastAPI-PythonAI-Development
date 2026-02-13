@@ -1,0 +1,99 @@
+Mount the Static directory in main.py 
+
+1. In your main app file, import StaticFiles package and mount the static directory 
+to the public URL path ("/static")
+
+2. the app.mount() which requires the URL path ("/static"), the local directory (directory="static")
+, and internal name(name="static"). 
+
+3. After starting the uvicorn server, the static files should be accessible via the defined URL. path 
+http://localhost:8000/static/css/bootstrap.css 
+
+4. For specific apps, where HTML applications requires Jinja2 templates, static files can be 
+referenced using the FastAPI url_for function with the template. 
+
+Real time PROD scenario 
+
+The order of defining routes and mounting of StaticFiles is important. In PROD env, these type of 
+static directory should be placed within the cloud storage bucket with cloudfront/ load balancer with 
+CDN. 
+
+CDN 
+
+Caching the FastAPI with CDN by placing a server (CloudFlare, Akamai, Azure CDN) placing it 
+in front of HTTP servers to cache the responses. 
+
+Key scenario 
+
+1. HTTP caching headers - utilize the standard HTTP headers like cache-control, ETag, 
+
+2. In-app caching 
+
+3. CDN configuration - configure the CDN with specific endpoints, the edge servers which 
+handle the requests closer the user and reducing latency to the primary origin server.
+
+FastAPI uses seamlessly with Jinja2 templating engine to render dynamic content on the 
+server side 
+
+ 1. create a directory called template: 
+ 
+ 
+ APIRouter in FastAPI 
+ 
+ The APIRouter is a powerful engine which organizes an fullstack application's 
+routes into seperate, modular files allowing developers to group related path operations, 
+apply configuration and improve the code maintainability & scalability. 
+
+Benefits
+
+1. Modularity - Breaks down the large app into logical, feature based sections ("/routes/users") or 
+("/routes/items"). 
+
+2. Maintainability - To keep code clean and manage the project as per the codefile increases, simplifies 
+the code debugging and code reviews. 
+
+3. Reusability & Colleaboration - Allows enterprises to work on seperate routes simultanouesly 
+without hindering each's progress / making a merge conflict. 
+
+4. Automated documents - allows applying prefixes and tags as configured. 
+
+a) Define the router in a seperate file - 
+
+b) Inclusion of the router file in the main FastAPI app file 
+
+FastAPI - Multiple File Structure 
+
+Scenario 
+
+a) Starting the same package which is in the module (the file app/routers/users.py) lives in directory("app/routes/")
+
+b) Find the module dependencies (app/routes/dependencies.py) 
+
+c) From the multiple file structure, where we can import the function - get_token_header 
+
+But if that file doesn't exist, the dependencies are in the file at app/dependencies.py  
+
+FastAPI provides a native high-performance feature which enables support WebSockets applying bidirectional
+, realtime communication channel between client and server over a single & persistent connection. 
+
+For real time apps like chat, realtime notification/alerts, collaboration tools. 
+
+Benefits 
+
+a) Bidirectional communication - unlike the traditional HTTP (request/response) Websockets 
+allow both the client and server to send messages at any time without repeatedly opening 
+new connections. 
+
+b) Async communication - built on ASGI webserver & using Python's async-await for efficient and 
+non-blocking handling of errors for concurrent websocket connection. 
+
+c) Native supprtability for 3rd party Py frameworks - 3rd libraries for websocket functionalities
+
+
+WebSockets Server side Communication with FastAPI 
+
+1. Create the FastAPI App 
+
+2. Run the server 
+
+3. Apply the client side code - JS, HTML to connect to the websocket endpoint

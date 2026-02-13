@@ -1,18 +1,9 @@
-# create the Static Files with FastAPI 
+# in the main router file mainrouter.py
 
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles 
-
-# initialize the app variable with FastAPI object 
+from fastapi import FastAPI 
+from routers import users
 
 app = FastAPI()
 
-# Mount the "static" directory to the "/static" path
-
-app.mount("/static", StaticFiles(directory="static", html=True), name="static")
-
-# API routes through the GET decorator
-
-@app.get("/viewmodel/view")
-def read_root():
-    return {"message": "Hello Static Files with FastAPI"}
+# the include_router method to organize the API into seperate, modular files which're required for fullstack FastAPI apps
+app.include_router(users.router)

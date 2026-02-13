@@ -8,11 +8,11 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 
 # adding client side HTML code 
-html = """
+html= """
 <!DOCTYPE html>
 <html>
  <head>
- <title>Chat</title>
+ <title> Chat application with FastAPI Websockets</title>
  </head>
  <body>
   <h1> Websocket CHAT with FastAPI <h1>
@@ -48,8 +48,7 @@ async def get():
     return HTMLResponse(html)
 
 # Adding WebSockets endpoint 
-# The @app.websocket("/ws") decorator creates a Websocket route at /ws when the client connection. websocket.accept() accepts the connection. 
-# while True loop keeps listening for incoming messages and for each messages received. 
+# 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()

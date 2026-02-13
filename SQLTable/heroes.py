@@ -28,6 +28,8 @@ def get_session():
     with Session(engine) as session:
         yield session 
 
+# Create Session dependency in FastAPI 
+
 SessionDep = Annotated[Session, Depends(get_session)]
 
 # initialize the app variable with FastAPI object 
@@ -39,6 +41,17 @@ app = FastAPI()
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
+
+async def lifespan(app: FastAPI):
+    try: 
+
+        print("database startup tasks are completed")
+        yield
+    finally:
+        print("Closing the connection pool")
+        engine.dispose()
+
+app = FastAPI(lifespan=lifespan)            
 
 
 # Define the HTTP Post decorator 

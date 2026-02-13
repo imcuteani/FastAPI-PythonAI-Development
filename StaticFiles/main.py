@@ -9,10 +9,10 @@ app = FastAPI()
 
 # Mount the "static" directory to the "/static" path
 
-app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # API routes through the GET decorator
 
-@app.get("/viewmodel/view")
+@app.get("/")
 def read_root():
     return {"message": "Hello Static Files with FastAPI"}

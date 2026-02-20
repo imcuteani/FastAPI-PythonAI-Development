@@ -1,7 +1,7 @@
 # SSE in FastAPI is typically implemented using StreamingResponse with an 
 # async generator. The library required is sse_starletter library. 
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException, Status
 from fastapi.responses import StreamingResponse
 import asyncio
 from datetime import datetime, timedelta
@@ -31,6 +31,8 @@ eventSource.onerror = function(error) {
 </body>
 </html>
 """
+
+MAX_FILE_SIZE = 100 * 1024 * 1024 # 100 MB of file size in bytes 
 
 @app.get("/stream")
 async def stream_events(request: Request):

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Task Progress</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .progress-container { width: 80%; max-width: 700px; margin: auto; }
+        #start-btn { font-size: 1.2rem; padding: 10px 20px; cursor: pointer; }
+        .progress-bar-outer { border: 1px solid #ccc; padding: 3px; border-radius: 5px; margin-top: 20px; }
+        .progress-bar-inner { background-color: #4CAF50; width: 0%; height: 30px; text-align: center; line-height: 30px; color: white; border-radius: 3px; transition: width 0.1s linear; }
+        #status-text { margin-top: 10px; font-size: 1rem; color: #555; height: 2em; }
+    </style>
+</head>
+<body>
+    <h1>AI Model Training Simulation</h1>
+    <div class="progress-container">
+        <button id="start-btn">Start Training</button>
+        <div id="progress-bar-outer" class="progress-bar-outer" style="display: none;">
+            <div id="progress-bar-inner" class="progress-bar-inner">0%</div>
+        </div>
+        <div id="status-text"></div>
+    </div>
+    <script>
+        const startBtn = document.getElementById('start-btn');
+        const progressBarOuter = document.getElementById('progress-bar-outer');
+        const progressBarInner = document.getElementById('progress-bar-inner');
+        const statusText = document.getElementById('status-text');
+
+        let eventSource;
+
+        startBtn.addEventListener('click', () => {
+            startBtn.disabled = true;
+            progressBarOuter.style.display = 'block';
+            statusText.textContent = 'Initializing...';
+
+            // Close any existing connection
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            // Start a new SSE connection
+            eventSource = new EventSource('http://localhost:8000/stream-training');
+
+            eventSource.addEventListener('progress', (e) => {
+                const data = JSON.parse(e.data);
+                const percent = data.progress_percent;
+                progressBarInner.style.width = percent + '%';
+                progressBarInner.textContent = percent.toFixed(0) + '%';
+                statusText.textContent = `Epoch: ${data.epoch}/${data.total_epochs} | Loss: ${data.loss}`;
+            });
+
+            eventSource.addEventListener('complete', (e) => {
+                statusText.textContent = e.data;
+                progressBarInner.style.backgroundColor = '#007bff';
+                eventSource.close(); // Close the connection
+                startBtn.disabled = false;
+            });
+
+            eventSource.onerror = () => {
+                statusText.textContent = 'Connection error. Please try again.';
+                eventSource.close();
+                startBtn.disabled = false;
+            };
+        });
+    </script>
+</body>
+</html>

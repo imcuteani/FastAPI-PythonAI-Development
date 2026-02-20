@@ -1,0 +1,54 @@
+Server side Events in FastAPI are implemented using an asynchoronus generator and 
+StreamingResponse Object. 
+
+The StreamingResponse object allows the server to push real-time, undirectional updates to the client 
+over a single, persistent HTTP connection. 
+
+This approach enables to create live feeds, notifications and dashboards where data flows from server to client side. 
+
+Key Benefits of Server Side events in FastAPI 
+
+1. Unidirectional data flow -> data flows are one way from the server to the client only unlike WebSockets. 
+
+
+2. Standard HTTP - SSE works over regular HTTP so that connectivity with firewall and proxy server can work. 
+
+3. Automated reconnection procedure - The client browser's has a built-in EventSource API which 
+automatically can handle the reconnection if the connection drops providing the application resilience. 
+
+4. Text based Message format - data: and ending with two newline characters ("\n\n") to signal the event of event chunk. 
+
+
+CORS (Cross-Origin Resource Sharing) Real time Benefits 
+
+1. CORSMiddleware class offers specific parameters to control access like - 
+
+a) Allows origins to make the specific request. ["*"] denotes that it allows all type origins. But not recommended in real time. 
+
+b) Allow credentials - a boolean value can be defined enabling support for HTTP response cookies and authorization
+headers. Defaults to false. if specified allow_origins is ["*"] then allow_credential should be false. 
+
+c) allow_methods - Defines the permitted HTTP methods, defaults to "GET" but "["*"] is common. 
+
+d) allow_headers - lists the supported request headers, default is empty ["*"] allows all values. 
+
+e) Expiration time (max_age) = sets the cache duration for preflight requests. 
+
+CORS preflight request is an automatic priliminary HTTP options request sent by the client browser to a server before 
+the actual cross-origin request is made. 
+
+Benefits / scenario to apply preflight request for CORS 
+
+1. It helps the server to validate the CORS protocol and options whether the server will permit the actual CORS 
+request ensuring that the target server is aware of the "CORS-aware" and not being vulnerable to the requests for any 
+specific content-type or custom headers sent by the client. 
+
+2. Preflight request also helps to check from client side before triggering the actual request to server whether the HTTP 
+methods to be used (other than GET, POST, HEAD) -> PUT, DELETE, PATCH etc. would be accepted or not. 
+
+3. Server can also validate before making actual request the custom headers (authorization, (OKTA, Entra ID, OAuth2 etc.) 
+
+4. Server can also check if the requested Content-Type header other than traditional "application/x-www-form-urlencoded", 
+" multipart/form-data" or "text/plain" since "application/json" common type of Content-Type header in FastAPI. 
+
+ 
